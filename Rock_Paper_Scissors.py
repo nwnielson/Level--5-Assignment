@@ -36,48 +36,52 @@ def get_player_choice(result, user_wins, computer_wins) :
         user_choice = input("\nEnter rock, paper, or scissors: ")
         while (user_choice.lower() not in ("rock", "paper", "scissors")):
             user_choice = input(user_choice + " is not a valid option. Please try again: ")
+        
 
-        #Comparisons and evaluations
-        #Checks if results in a tie  
-        if(random_choice == user_choice.lower()) :
-            result = "Tie"
+        #Checks if user wins game, if not, follows other path.
+        if determine_winner(random_choice, user_choice) == "Win" :
+            print("You chose " + user_choice.lower())
+            print("The computer chose " + random_choice.lower())
+            print("You win!")
+            winner = "User"
+            result = "Win"
+            return winner
+        elif determine_winner(random_choice, user_choice) == "Lose" :
+            print("You chose " + user_choice.lower())
+            print("The computer chose " + random_choice.lower())
+            print("You lose!")
+            winner = "Computer"
+            result = "Lose"
+            return winner
+        else:
             print("You chose " + user_choice.lower())
             print("The computer chose " + random_choice.lower())
             print("It's a tie! Try again.")
-        else :
-            #Checks if user wins game, if not, follows other path.
-            if determine_winner(random_choice, user_choice) :
-                print("You chose " + user_choice.lower())
-                print("The computer chose " + random_choice.lower())
-                print("You win!")
-                winner = "User"
-                result = "Win"
-                return winner
-            else :
-                print("You chose " + user_choice.lower())
-                print("The computer chose " + random_choice.lower())
-                print("You lose!")
-                winner = "Computer"
-                result = "Lose"
-                return winner
+            result = "Tie"
 
-#Function to check to see if player or computer won
+#Function to check to see if player or computer won or tie
 def determine_winner(random_choice, user_choice) :
     if (user_choice.lower() == "rock") :
         if (random_choice == "paper") :
-            return False
-        else :
-            return True
-    if (user_choice.lower() == "paper") :
+            return "Lose"
+        elif(random_choice == "scissors") :
+            return "Win"
+        else : 
+            return "Tie"
+    elif (user_choice.lower() == "paper") :
         if(random_choice == "scissors") :
-            return False
+            return "Lose"
+        elif (random_choice == "rock"):
+            return "Win"
         else :
-            return True
-    if (user_choice.lower() == "scissors") :
+            return "Tie"
+    elif (user_choice.lower() == "scissors") :
         if (random_choice == "rock") :
-            return False
+            return "Lose"
+        elif (random_choice == "paper") :
+            return "Win"
         else :
-            return True
+            return "Tie"
     
 
 rounds = int(input("Welcome to Rock Paper Scissors! How many rounds would you like to play? "))
